@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basics: Postulates & Formalism - Quantum Foundations</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']],
+          macros: {
+            braket: ['\\langle #1 \\rangle', 1],
+            ket: ['| #1 \\rangle', 1],
+            bra: ['\\langle #1 |', 1],
+            Tr: ['\\operatorname{Tr}'], // Use operatorname for Tr
+            Id: ['\\mathbb{I}'],
+            Re: ['\\operatorname{Re}'],
+            Im: ['\\operatorname{Im}'],
+            adj: ['^{\\dagger}'],
+            abs: ['\\left| #1 \\right|', 1]
+          }
+        },
+        svg: {
+          fontCache: 'global'
+        }
+      };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+    </script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <p class="breadcrumb"><a href="index.html">Home</a> > Lecture 0 (Basics)</p>
+            <h1>Lecture 0 (Basics): Postulates of Quantum Mechanics & Mathematical Formalism</h1>
+        </div>
+    </header>
+
+    <main class="container">
+        <section id="intro-math-prelims">
+            <h2>Introduction and Mathematical Preliminaries</h2>
+            <p>Quantum mechanics is a probabilistic theory describing the physical properties of nature at the scale of atoms and subatomic particles. Its mathematical foundation lies in linear algebra over complex Hilbert spaces.</p>
+
+            <h3>Hilbert Spaces</h3>
+            <p>A Hilbert space $\mathcal{H}$ is a vector space equipped with an inner product $\braket{\cdot | \cdot}$ that is complete with respect to the norm induced by the inner product. For finite-dimensional systems, this is typically $\mathbb{C}^d$.
+            The norm of a vector $\ket{\psi}$ is $\|\psi\| = \sqrt{\braket{\psi|\psi}}$.</p>
+
+            <h3>Dirac Notation (Bra-Ket Notation)</h3>
+            <ul>
+                <li><strong>Ket Vector:</strong> $\ket{\psi}$ represents a column vector in $\mathcal{H}$.
+                    For $\ket{\psi} \in \mathbb{C}^d$, $\ket{\psi} = \begin{pmatrix} \alpha_1 \\ \alpha_2 \\ \vdots \\ \alpha_d \end{pmatrix}$, where $\alpha_i \in \mathbb{C}$.
+                </li>
+                <li><strong>Bra Vector:</strong> $\bra{\phi}$ represents a row vector, the Hermitian conjugate (adjoint) of $\ket{\phi}$.
+                    If $\ket{\phi} = \begin{pmatrix} \beta_1 \\ \vdots \\ \beta_d \end{pmatrix}$, then $\bra{\phi} = (\beta_1^*, \dots, \beta_d^*)$.
+                </li>
+                <li><strong>Inner Product:</strong> $\braket{\phi|\psi} = \bra{\phi}\ket{\psi} = \sum_{i=1}^d \beta_i^* \alpha_i \in \mathbb{C}$.
+                    Properties:
+                    <ul>
+                        <li>$\braket{\phi|\psi} = \braket{\psi|\phi}^*$ (conjugate symmetry)</li>
+                        <li>$\braket{\phi|c_1\psi_1 + c_2\psi_2} = c_1\braket{\phi|\psi_1} + c_2\braket{\phi|\psi_2}$ (linearity in ket)</li>
+                        <li>$\braket{c_1\phi_1 + c_2\phi_2|\psi} = c_1^*\braket{\phi_1|\psi} + c_2^*\braket{\phi_2|\psi}$ (anti-linearity in bra)</li>
+                        <li>$\braket{\psi|\psi} \ge 0$, and $\braket{\psi|\psi}=0 \iff \ket{\psi}=0$ (positive-definiteness)</li>
+                    </ul>
+                </li>
+                <li><strong>Outer Product:</strong> $\ket{\psi}\bra{\phi}$ is an operator (a $d \times d$ matrix).
+                    $(\ket{\psi}\bra{\phi})_{ij} = \alpha_i \beta_j^*$.
+                </li>
+            </ul>
+
+            <h3>Operators</h3>
+            <p>Linear operators $A: \mathcal{H} \to \mathcal{H}$ map vectors to vectors. In a finite-dimensional space, they can be represented by matrices.
+            The adjoint of an operator $A$ is denoted $A\adj$. It satisfies $\braket{\phi|A\psi} = \braket{A\adj\phi|\psi}$ for all $\ket{\psi}, \ket{\phi}$.
+            In matrix representation, $A\adj = (A^T)^* = (A^*)^T$.
+            </p>
+            <ul>
+                <li><strong>Hermitian Operator:</strong> $A = A\adj$. Eigenvalues are real. Eigenvectors corresponding to distinct eigenvalues are orthogonal.</li>
+                <li><strong>Unitary Operator:</strong> $U\adj U = U U\adj = \Id$. Preserves inner products: $\braket{U\phi|U\psi} = \braket{\phi|\psi}$. Eigenvalues have modulus 1.</li>
+                <li><strong>Projector:</strong> $P = P\adj$ and $P^2 = P$. Eigenvalues are 0 or 1. $P_{\psi} = \ket{\psi}\bra{\psi}$ (for normalized $\ket{\psi}$) is a projector onto the state $\ket{\psi}$.</li>
+            </ul>
+            <p>An orthonormal basis $\{\ket{e_i}\}$ for $\mathcal{H}$ satisfies $\braket{e_i|e_j} = \delta_{ij}$ (Kronecker delta) and any vector $\ket{\psi}$ can be written as $\ket{\psi} = \sum_i c_i \ket{e_i}$ where $c_i = \braket{e_i|\psi}$. The identity operator is $\Id = \sum_i \ket{e_i}\bra{e_i}$.</p>
+        </section>
+
+        <section id="postulates">
+            <h2>Postulates of Quantum Mechanics</h2>
+
+            <h3>Postulate 1: State Space</h3>
+            <p>Associated with any isolated physical system is a complex Hilbert space $\mathcal{H}$ known as the state space of the system. The state of the system is completely described by a normalized vector $\ket{\psi} \in \mathcal{H}$, where $\|\psi\| = \sqrt{\braket{\psi|\psi}} = 1$.
+            This vector $\ket{\psi}$ is often called the wavefunction or state vector.
+            (Note: More generally, states are described by density operators $\rho$, where pure states correspond to $\rho = \ket{\psi}\bra{\psi}$.)
+            </p>
+
+            <h3>Postulate 2: Observables and Operators</h3>
+            <p>To every physically observable quantity $A$ (e.g., position, momentum, energy, spin), there corresponds a Hermitian operator $\hat{A}$ acting on the state space $\mathcal{H}$. The possible results of a measurement of the observable $A$ are the eigenvalues of the operator $\hat{A}$.</p>
+            <p>If $\hat{A}\ket{a_n} = a_n\ket{a_n}$, then $a_n$ are the eigenvalues (possible measurement outcomes) and $\ket{a_n}$ are the corresponding eigenvectors. Since $\hat{A}$ is Hermitian, $a_n$ are real and $\{\ket{a_n}\}$ can form an orthonormal basis (assuming non-degenerate eigenvalues for simplicity here, or proper handling of degeneracy).
+            The spectral decomposition of $\hat{A}$ is $\hat{A} = \sum_n a_n \ket{a_n}\bra{a_n} = \sum_n a_n P_n$, where $P_n = \ket{a_n}\bra{a_n}$ is the projector onto the eigenspace corresponding to $a_n$.
+            </p>
+
+            <h3>Postulate 3: Measurement</h3>
+            <p><strong>a) Probabilities (Born Rule):</strong> If a system is in a state $\ket{\psi}$, and a measurement of observable $A$ (with operator $\hat{A}$) is performed, the probability of obtaining the eigenvalue $a_n$ as the outcome is given by:
+            $$ P(a_n) = |\braket{a_n|\psi}|^2 = \braket{\psi|P_n|\psi} $$
+            where $\ket{a_n}$ is the (normalized) eigenvector corresponding to $a_n$, and $P_n$ is the projector onto the eigenspace of $a_n$.
+            The sum of probabilities is $\sum_n P(a_n) = \sum_n \braket{\psi|P_n|\psi} = \braket{\psi| (\sum_n P_n) |\psi} = \braket{\psi|\Id|\psi} = \braket{\psi|\psi} = 1$.
+            </p>
+            <p><strong>b) State Collapse (Projection Postulate):</strong> If the measurement of $A$ on state $\ket{\psi}$ yields the outcome $a_n$ (assuming $a_n$ is non-degenerate for simplicity), then immediately after the measurement, the state of the system "collapses" to the corresponding normalized eigenvector:
+            $$ \ket{\psi'} = \frac{P_n\ket{\psi}}{\|P_n\ket{\psi}\|} = \frac{\ket{a_n}\braket{a_n|\psi}}{|\braket{a_n|\psi}|} = \ket{a_n} \quad (\text{up to a phase factor if } \braket{a_n|\psi} \text{ is complex}) $$
+            If $a_n$ is degenerate, $P_n$ projects onto the eigenspace, and $\ket{\psi'} = \frac{P_n\ket{\psi}}{\sqrt{\braket{\psi|P_n|\psi}}}$.
+            </p>
+            <p><strong>Expectation Value:</strong> The expectation value (average value) of observable $A$ for a system in state $\ket{\psi}$ is:
+            $$ \braket{A} = \sum_n a_n P(a_n) = \sum_n a_n |\braket{a_n|\psi}|^2 = \sum_n a_n \braket{\psi|\ket{a_n}\bra{a_n}|\psi} = \braket{\psi| (\sum_n a_n \ket{a_n}\bra{a_n}) |\psi} $$
+            $$ \braket{A} = \braket{\psi|\hat{A}|\psi} $$
+            </p>
+
+            <h3>Postulate 4: Time Evolution</h3>
+            <p>The time evolution of the state vector $\ket{\psi(t)}$ of an isolated quantum system is governed by the Schrödinger equation:
+            $$ i\hbar \frac{d}{dt}\ket{\psi(t)} = \hat{H}\ket{\psi(t)} $$
+            where $\hbar = h/(2\pi)$ is the reduced Planck constant, and $\hat{H}$ is the Hamiltonian operator for the system (the observable corresponding to the total energy of the system). $\hat{H}$ is Hermitian.
+            </p>
+            <p>If $\hat{H}$ is time-independent, the formal solution is:
+            $$ \ket{\psi(t)} = e^{-i\hat{H}t/\hbar} \ket{\psi(0)} = U(t)\ket{\psi(0)} $$
+            where $U(t) = e^{-i\hat{H}t/\hbar}$ is the time evolution operator, which is unitary ($U(t)\adj U(t) = \Id$).
+            Unitarity ensures that the norm of the state vector is preserved: $\braket{\psi(t)|\psi(t)} = \braket{\psi(0)|U\adj(t)U(t)|\psi(0)} = \braket{\psi(0)|\psi(0)} = 1$.
+            </p>
+
+            <h3>Postulate 5: Composite Systems</h3>
+            <p>If a system is composed of two subsystems $S_1$ and $S_2$ with state spaces $\mathcal{H}_1$ and $\mathcal{H}_2$ respectively, the state space of the composite system $S = S_1 + S_2$ is the tensor product space $\mathcal{H} = \mathcal{H}_1 \otimes \mathcal{H}_2$.
+            If $\ket{\psi_1} \in \mathcal{H}_1$ and $\ket{\psi_2} \in \mathcal{H}_2$, a state of the composite system can be a product state $\ket{\psi} = \ket{\psi_1} \otimes \ket{\psi_2}$ (often written $\ket{\psi_1}\ket{\psi_2}$).
+            However, not all states in $\mathcal{H}_1 \otimes \mathcal{H}_2$ are product states. Linear combinations of product states, e.g., $c_1(\ket{\phi_1}\otimes\ket{\phi_2}) + c_2(\ket{\chi_1}\otimes\ket{\chi_2})$, which cannot be factored into a single product state, are called **entangled states**.
+            </p>
+            <p>If $\{\ket{e_i^{(1)}}\}$ is a basis for $\mathcal{H}_1$ and $\{\ket{f_j^{(2)}}\}$ is a basis for $\mathcal{H}_2$, then $\{\ket{e_i^{(1)}} \otimes \ket{f_j^{(2)}}\}$ forms a basis for $\mathcal{H}_1 \otimes \mathcal{H}_2$.
+            If $\dim(\mathcal{H}_1) = d_1$ and $\dim(\mathcal{H}_2) = d_2$, then $\dim(\mathcal{H}_1 \otimes \mathcal{H}_2) = d_1 d_2$.
+            </p>
+            <p>Operators on composite systems: If $\hat{A}_1$ acts on $\mathcal{H}_1$ and $\hat{A}_2$ acts on $\mathcal{H}_2$, then $\hat{A}_1 \otimes \hat{A}_2$ acts on $\mathcal{H}_1 \otimes \mathcal{H}_2$. An operator acting only on subsystem 1 is $\hat{A}_1 \otimes \Id_2$.
+            </p>
+        </section>
+
+        <section id="simple-qubit-example">
+            <h2>Example: A Qubit System ($\mathbb{C}^2$)</h2>
+            <p>A qubit is a two-level quantum system. Its Hilbert space is $\mathcal{H} = \mathbb{C}^2$.
+            A standard orthonormal basis is the computational basis:
+            $$ \ket{0} = \begin{pmatrix} 1 \\ 0 \end{pmatrix}, \quad \ket{1} = \begin{pmatrix} 0 \\ 1 \end{pmatrix} $$
+            An arbitrary pure state of a qubit can be written as:
+            $$ \ket{\psi} = \alpha\ket{0} + \beta\ket{1} = \begin{pmatrix} \alpha \\ \beta \end{pmatrix} $$
+            where $\alpha, \beta \in \mathbb{C}$ and normalization requires $|\alpha|^2 + |\beta|^2 = 1$.
+            </p>
+            <p>Observables for a qubit are $2 \times 2$ Hermitian matrices. The Pauli matrices are fundamental:
+            $$ \sigma_x = \hat{X} = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix} = \ket{0}\bra{1} + \ket{1}\bra{0} $$
+            $$ \sigma_y = \hat{Y} = \begin{pmatrix} 0 & -i \\ i & 0 \end{pmatrix} = -i\ket{0}\bra{1} + i\ket{1}\bra{0} $$
+            $$ \sigma_z = \hat{Z} = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix} = \ket{0}\bra{0} - \ket{1}\bra{1} $$
+            The identity operator is $\Id = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$.
+            </p>
+            <p><b>Eigenvalues and Eigenvectors of Pauli Matrices:</b></p>
+            <p>For $\sigma_z$:
+            Eigenvalues are $+1, -1$.
+            Eigenvector for $+1$: $\ket{0}$. $P_{+1}^{(z)} = \ket{0}\bra{0}$.
+            Eigenvector for $-1$: $\ket{1}$. $P_{-1}^{(z)} = \ket{1}\bra{1}$.
+            </p>
+            <p>For $\sigma_x$:
+            To find eigenvalues: $\det(\sigma_x - \lambda\Id) = \det \begin{pmatrix} -\lambda & 1 \\ 1 & -\lambda \end{pmatrix} = \lambda^2 - 1 = 0 \implies \lambda = \pm 1$.
+            Eigenvector for $+1$: $(\sigma_x - \Id)\ket{v_+} = 0 \implies \begin{pmatrix} -1 & 1 \\ 1 & -1 \end{pmatrix} \begin{pmatrix} v_1 \\ v_2 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix} \implies -v_1+v_2=0$.
+            Normalized eigenvector $\ket{+} = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 \\ 1 \end{pmatrix} = \frac{1}{\sqrt{2}}(\ket{0}+\ket{1})$. $P_{+1}^{(x)} = \ket{+}\bra{+}$.
+            Eigenvector for $-1$: $\ket{-} = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 \\ -1 \end{pmatrix} = \frac{1}{\sqrt{2}}(\ket{0}-\ket{1})$. $P_{-1}^{(x)} = \ket{-}\bra{-}$.
+            </p>
+            <p><b>Measurement Example:</b></p>
+            <p>Let the system be in state $\ket{\psi} = \alpha\ket{0} + \beta\ket{1}$.
+            Measure observable $\sigma_z$.
+            Probability of outcome $+1$ (state collapses to $\ket{0}$):
+            $$ P(+1) = |\braket{0|\psi}|^2 = |\bra{0}(\alpha\ket{0} + \beta\ket{1})|^2 = |\alpha\braket{0|0} + \beta\braket{0|1}|^2 = |\alpha \cdot 1 + \beta \cdot 0|^2 = |\alpha|^2 $$
+            Probability of outcome $-1$ (state collapses to $\ket{1}$):
+            $$ P(-1) = |\braket{1|\psi}|^2 = |\bra{1}(\alpha\ket{0} + \beta\ket{1})|^2 = |\beta\braket{1|1}|^2 = |\beta|^2 $$
+            Check: $P(+1) + P(-1) = |\alpha|^2 + |\beta|^2 = 1$.
+            </p>
+            <p>Measure observable $\sigma_x$ on the same initial state $\ket{\psi} = \alpha\ket{0} + \beta\ket{1}$.
+            Probability of outcome $+1$ (state collapses to $\ket{+}$):
+            \begin{align*} P(+1) &= |\braket{+|\psi}|^2 = \abs{ \left( \frac{1}{\sqrt{2}}(\bra{0}+\bra{1}) \right) (\alpha\ket{0} + \beta\ket{1}) }^2 \\ &= \abs{ \frac{1}{\sqrt{2}} (\alpha\braket{0|0} + \beta\braket{0|1} + \alpha\braket{1|0} + \beta\braket{1|1}) }^2 \\ &= \abs{ \frac{1}{\sqrt{2}} (\alpha + \beta) }^2 = \frac{1}{2} |\alpha+\beta|^2 = \frac{1}{2} (\alpha+\beta)(\alpha^*+\beta^*) \\ &= \frac{1}{2} (|\alpha|^2 + |\beta|^2 + \alpha\beta^* + \alpha^*\beta) = \frac{1}{2} (1 + 2\Re(\alpha\beta^*)) \end{align*}
+            Probability of outcome $-1$ (state collapses to $\ket{-}$):
+            \begin{align*} P(-1) &= |\braket{-|\psi}|^2 = \abs{ \left( \frac{1}{\sqrt{2}}(\bra{0}-\bra{1}) \right) (\alpha\ket{0} + \beta\ket{1}) }^2 \\ &= \abs{ \frac{1}{\sqrt{2}} (\alpha - \beta) }^2 = \frac{1}{2} |\alpha-\beta|^2 = \frac{1}{2} (|\alpha|^2 + |\beta|^2 - \alpha\beta^* - \alpha^*\beta) \\ &= \frac{1}{2} (1 - 2\Re(\alpha\beta^*)) \end{align*}
+            Check: $P(+1) + P(-1) = \frac{1}{2}(1 + 2\Re(\alpha\beta^*)) + \frac{1}{2}(1 - 2\Re(\alpha\beta^*)) = \frac{1}{2} + \frac{1}{2} = 1$.
+            </p>
+            <p><b>Expectation Value Calculation:</b></p>
+            <p>For state $\ket{\psi} = \alpha\ket{0} + \beta\ket{1}$, expectation of $\sigma_z$:
+            $$ \braket{\sigma_z} = \braket{\psi|\sigma_z|\psi} = (\alpha^*\bra{0} + \beta^*\bra{1}) \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix} \begin{pmatrix} \alpha \\ \beta \end{pmatrix} $$
+            $$ = (\alpha^*\bra{0} + \beta^*\bra{1}) (\alpha\ket{0} - \beta\ket{1}) = \alpha^*\alpha\braket{0|0} - \alpha^*\beta\braket{0|1} + \beta^*\alpha\braket{1|0} - \beta^*\beta\braket{1|1} $$
+            $$ = |\alpha|^2 - |\beta|^2 $$
+            This matches $(+1)P(+1) + (-1)P(-1) = (+1)|\alpha|^2 + (-1)|\beta|^2$.
+            </p>
+        </section>
+
+        <section class="qa-section">
+            <h2>Questions & Answers (Basics)</h2>
+            <div class="qa-item">
+                <button class="qa-question">What is the mathematical object used to describe the state of an isolated quantum system?</button>
+                <div class="qa-answer">
+                    <p>The state of an isolated quantum system is described by a normalized vector $\ket{\psi}$ in a complex Hilbert space $\mathcal{H}$, often called the state vector or wavefunction. Normalization means $\braket{\psi|\psi} = 1$.</p>
+                </div>
+            </div>
+            <div class="qa-item">
+                <button class="qa-question">How are physical observables represented in quantum mechanics, and what determines the possible outcomes of measuring an observable?</button>
+                <div class="qa-answer">
+                    <p>Physical observables are represented by Hermitian operators $\hat{A}$ acting on the system's Hilbert space. The possible outcomes of measuring the observable $A$ are the real eigenvalues of the operator $\hat{A}$.</p>
+                </div>
+            </div>
+            <div class="qa-item">
+                <button class="qa-question">State the Born rule for calculating the probability of a specific measurement outcome.</button>
+                <div class="qa-answer">
+                    <p>If a system is in state $\ket{\psi}$ and one measures an observable $\hat{A}$ with non-degenerate eigenvalue $a_n$ and corresponding normalized eigenvector $\ket{a_n}$, the probability of obtaining outcome $a_n$ is $P(a_n) = |\braket{a_n|\psi}|^2$. More generally, $P(a_n) = \braket{\psi|P_n|\psi}$, where $P_n$ is the projector onto the eigenspace of $a_n$.</p>
+                </div>
+            </div>
+            <div class="qa-item">
+                <button class="qa-question">What is the Schrödinger equation and what does it describe?</button>
+                <div class="qa-answer">
+                    <p>The Schrödinger equation, $i\hbar \frac{d}{dt}\ket{\psi(t)} = \hat{H}\ket{\psi(t)}$, describes how the state vector $\ket{\psi(t)}$ of an isolated quantum system evolves in time. $\hat{H}$ is the Hamiltonian operator (total energy) of the system.</p>
+                </div>
+            </div>
+            <div class="qa-item">
+                <button class="qa-question">If a qubit is in the state $\ket{\psi} = \frac{1}{\sqrt{5}}\ket{0} + \frac{2i}{\sqrt{5}}\ket{1}$, what is the probability of measuring outcome $+1$ for the observable $\sigma_x$?</button>
+                <div class="qa-answer">
+                    <p>The eigenstate for $\sigma_x=+1$ is $\ket{+} = \frac{1}{\sqrt{2}}(\ket{0}+\ket{1})$.
+                    $\alpha = 1/\sqrt{5}$, $\beta = 2i/\sqrt{5}$.
+                    $P(+1) = \frac{1}{2} |\alpha+\beta|^2 = \frac{1}{2} \abs{\frac{1}{\sqrt{5}} + \frac{2i}{\sqrt{5}}}^2 = \frac{1}{2} \abs{\frac{1+2i}{\sqrt{5}}}^2$.
+                    $\abs{1+2i}^2 = (1)^2 + (2)^2 = 1+4=5$.
+                    So, $P(+1) = \frac{1}{2} \frac{5}{5} = \frac{1}{2}$.</p>
+                </div>
+            </div>
+        </section>
+
+        <nav class="part-nav">
+            <a href="index.html" class="nav-prev">« Table of Contents</a>
+            <a href="part1_ontological_models.html" class="nav-next">Next: Ontological Models »</a>
+        </nav>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2023 Quantum Foundations Notes Project</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js" defer></script>
+</body>
+</html>
