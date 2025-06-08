@@ -1,0 +1,290 @@
+/* --- Global Styles & Dark Mode Base --- */
+:root {
+    --bg-color: #1a1b26; /* Slightly different dark blue/purple, inspired by some popular dark themes */
+    --surface-color: #24283b; /* A bit more contrast for surfaces */
+    --primary-text-color: #c0caf5; /* Lighter, slightly bluish text */
+    --secondary-text-color: #a9b1d6;
+    --accent-color: #7aa2f7; /* Brighter Material blue accent */
+    --accent-color-hover: #9eceff;
+    --accent-color-subtle: #414868; /* For borders or subtle backgrounds */
+    --success-color: #9ece6a; /* Green for Q&A answer indicator, etc. */
+    --danger-color: #f7768e; /* Red, if needed */
+    --font-family: 'Roboto', 'Noto Sans', sans-serif;
+    --border-radius: 10px; /* Slightly more rounded */
+    --shadow-subtle: 0 4px 10px rgba(0,0,0,0.25);
+    --line-height: 1.75;
+}
+
+/* --- Basic Reset --- */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--primary-text-color);
+    font-family: var(--font-family);
+    line-height: var(--line-height);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-size: 16px; /* Base font size */
+}
+
+/* --- Container & Layout --- */
+.container {
+    width: 90%;
+    max-width: 900px; /* Readable line length */
+    margin: 30px auto;
+    padding: 25px 35px;
+    background-color: var(--surface-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-subtle);
+}
+
+header {
+    background-color: var(--surface-color); /* Header can have surface color too */
+    padding: 10px 0;
+    border-bottom: 2px solid var(--accent-color-subtle);
+}
+header .container {
+    background-color: transparent; /* Remove double bg */
+    box-shadow: none;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+main.container {
+    flex-grow: 1; /* Makes main content take available space */
+}
+
+footer {
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 30px;
+    font-size: 0.9em;
+    color: var(--secondary-text-color);
+    border-top: 1px solid var(--accent-color-subtle);
+}
+footer .container {
+    background-color: transparent;
+    box-shadow: none;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+
+/* --- Typography --- */
+h1, h2, h3, h4 {
+    color: var(--accent-color);
+    margin-top: 1.8em;
+    margin-bottom: 0.9em;
+    font-weight: 500;
+    line-height: 1.3;
+}
+h1 {
+    font-size: 2.4em;
+    border-bottom: 2px solid var(--accent-color);
+    padding-bottom: 0.4em;
+    text-align: center;
+}
+h2 { font-size: 1.9em; margin-top: 2em;}
+h3 { font-size: 1.5em; color: #a6c0fe; /* Lighter accent */}
+
+p { margin-bottom: 1.3em; }
+a { color: var(--accent-color); text-decoration: none; transition: color 0.2s ease; }
+a:hover { color: var(--accent-color-hover); text-decoration: underline; }
+
+strong { font-weight: 700; color: #e0e7ff; }
+em { color: #b8c5f5; font-style: italic; }
+
+ul, ol {
+    margin-left: 25px;
+    margin-bottom: 1.2em;
+}
+li { margin-bottom: 0.5em; }
+
+/* --- Navigation --- */
+.main-nav .container {
+    background-color: var(--bg-color); /* Match body for ToC section */
+    box-shadow: none;
+    border-bottom: 1px solid var(--accent-color-subtle);
+}
+.main-nav h2 {
+    text-align: center;
+    margin-top: 0.5em;
+    border-bottom: none;
+}
+.main-nav ul {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+}
+.main-nav ul li {
+    display: inline-block; /* Or flex for more control */
+    margin: 0 15px 10px;
+}
+.main-nav ul li a {
+    font-size: 1.1em;
+    font-weight: 500;
+    padding: 8px 15px;
+    border-radius: var(--border-radius);
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+.main-nav ul li a:hover {
+    background-color: var(--accent-color-subtle);
+    color: var(--accent-color-hover);
+    text-decoration: none;
+}
+
+.breadcrumb {
+    font-size: 0.9em;
+    color: var(--secondary-text-color);
+    margin-bottom: 1em;
+}
+.breadcrumb a {
+    color: var(--secondary-text-color);
+}
+.breadcrumb a:hover {
+    color: var(--accent-color);
+}
+
+.part-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid var(--accent-color-subtle);
+}
+.part-nav a {
+    padding: 10px 15px;
+    border: 1px solid var(--accent-color-subtle);
+    border-radius: var(--border-radius);
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+.part-nav a:hover {
+    background-color: var(--accent-color-subtle);
+    border-color: var(--accent-color);
+    text-decoration: none;
+}
+
+/* --- MathJax Styling --- */
+.mjx-chtml, .MathJax_SVG { /* Target MathJax output */
+    font-size: 1.05em !important; /* Slightly larger for readability */
+    color: var(--primary-text-color) !important; /* Ensure math color matches */
+}
+mjx-container[display="true"] {
+    margin-top: 1.5em !important;
+    margin-bottom: 1.5em !important;
+    overflow-x: auto; /* Handle very wide equations */
+    padding-bottom: 5px; /* Space for scrollbar if needed */
+}
+
+
+/* --- Q&A Styling --- */
+.qa-section {
+    margin-top: 50px;
+    border-top: 2px solid var(--accent-color-subtle);
+    padding-top: 25px;
+}
+.qa-section h2 {
+    text-align: center;
+    margin-bottom: 1.5em;
+}
+.qa-item {
+    margin-bottom: 20px;
+    border: 1px solid var(--accent-color-subtle);
+    border-radius: var(--border-radius);
+    background-color: rgba(0,0,0,0.1); /* Subtle difference for item bg */
+    transition: box-shadow 0.3s ease;
+}
+.qa-item:hover {
+    box-shadow: 0 0 15px rgba(122, 162, 247, 0.2); /* Accent color glow */
+}
+
+.qa-question {
+    background-color: transparent;
+    color: var(--accent-color);
+    border: none;
+    border-bottom: 1px dashed transparent; /* Placeholder for active state */
+    padding: 18px 25px;
+    width: 100%;
+    text-align: left;
+    font-size: 1.15em;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+.qa-question:hover {
+    background-color: rgba(122, 162, 247, 0.05);
+}
+.qa-question.active {
+    /* border-bottom-color: var(--accent-color); */ /* Indicate active */
+    color: var(--success-color); /* Change color when active */
+}
+.qa-question::after {
+    content: '\\276F'; /* Heavy right-pointing angle quotation mark */
+    font-size: 1.2em;
+    font-weight: bold;
+    color: var(--accent-color);
+    transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Expressive ease */
+}
+.qa-question.active::after {
+    transform: rotate(90deg);
+    color: var(--success-color);
+}
+
+.qa-answer {
+    padding: 0px 25px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.25, 0.1, 0.25, 1.0),
+                padding 0.5s cubic-bezier(0.25, 0.1, 0.25, 1.0);
+    color: var(--secondary-text-color);
+    border-top: 1px solid transparent; /* Separator appears when open */
+}
+.qa-answer.active {
+    max-height: 1000px; /* Generous max height */
+    padding: 20px 25px;
+    border-top-color: var(--accent-color-subtle);
+}
+.qa-answer p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* --- Responsive Design --- */
+@media (max-width: 768px) {
+    body { font-size: 15px; }
+    .container {
+        width: 95%;
+        padding: 20px 25px;
+        margin: 20px auto;
+    }
+    h1 { font-size: 2em; }
+    h2 { font-size: 1.6em; }
+    h3 { font-size: 1.3em; }
+
+    .main-nav ul li { margin: 0 8px 10px; }
+    .main-nav ul li a { padding: 6px 10px; }
+}
+
+@media (max-width: 480px) {
+    body { font-size: 14px; }
+    .container { padding: 15px 20px; }
+    h1 { font-size: 1.7em; }
+    h2 { font-size: 1.4em; }
+
+    .qa-question { padding: 15px 20px; font-size: 1.1em; }
+    .qa-answer { padding: 0px 20px; }
+    .qa-answer.active { padding: 15px 20px; }
+}
