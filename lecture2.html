@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecture 1: General Measurements & Dynamics - Quantum Foundations</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']],
+          macros: {
+            braket: ['\\langle #1 \\rangle', 1],
+            ket: ['| #1 \\rangle', 1],
+            bra: ['\\langle #1 |', 1],
+            Tr: ['\\text{Tr}'],
+            Id: ['\\mathbb{I}']
+          }
+        },
+        svg: {
+          fontCache: 'global'
+        }
+      };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+    </script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <p class="breadcrumb"><a href="index.html">Home</a> > Lecture 1</p>
+            <h1>Lecture 1: General Quantum Measurements, POVMs, Incompatibility, and Dynamics</h1>
+        </div>
+    </header>
+
+    <main class="container">
+        <section id="general-measurements">
+            <h2>General Quantum Measurements (POVMs)</h2>
+            <p>In quantum mechanics, measurements are not restricted to projective measurements (described by Hermitian operators). A more general framework is provided by Positive Operator-Valued Measures (POVMs).</p>
+            <p>A general measurement is described by a set of measurement operators $\{M_k\}$, often called Kraus operators in the context of operations, where $k$ labels the possible outcomes of the measurement. These operators must satisfy the completeness relation:</p>
+            $$ \sum_k M_k^\dagger M_k = \Id $$
+            <p>If a system is in a state described by the density matrix $\rho$, the probability of obtaining outcome $k$ is given by:</p>
+            $$ p(k) = \Tr(M_k^\dagger M_k \rho) $$
+            <p>The state of the system after measurement outcome $k$ is (if the operators $M_k$ are Kraus operators describing the full process):</p>
+            $$ \rho_k = \frac{M_k \rho M_k^\dagger}{\Tr(M_k \rho M_k^\dagger)} = \frac{M_k \rho M_k^\dagger}{p(k)} $$
+            <p>The elements $E_k = M_k^\dagger M_k$ are called POVM elements. They have the following properties:</p>
+            <ul>
+                <li>Each $E_k$ is a positive semi-definite operator ($E_k \ge 0$).</li>
+                <li>The sum of all POVM elements is the identity operator ($\sum_k E_k = \Id$).</li>
+            </ul>
+            <p>Using POVM elements, the probability of outcome $k$ can also be written as:</p>
+            $$ p(k) = \Tr(E_k \rho) $$
+            <p>Note that the POVM elements $E_k$ only determine the probabilities of outcomes, not the post-measurement state. If one is only interested in the probabilities, the POVM formalism $\{E_k\}$ is sufficient. The operators $M_k$ are needed to describe the state change.</p>
+
+            <h3>Examples from Notes:</h3>
+            <p><b>1. Binary Measurement (e.g., from a POVM):</b></p>
+            <p>Consider a binary measurement with outcomes $+1$ and $-1$, described by POVM elements $M_{+1}$ and $M_{-1}$ (here using $M_k$ as POVM elements directly as sometimes seen in simplified notation, where $M_k \ge 0$ and $\sum M_k = \Id$).</p>
+            <p>If the system is prepared in state $\ket{\psi}$, then:</p>
+            $$ p(+1) = \Tr(M_{+1} \ket{\psi}\bra{\psi}) = \braket{\psi | M_{+1} | \psi} $$
+            $$ p(-1) = \Tr(M_{-1} \ket{\psi}\bra{\psi}) = \braket{\psi | M_{-1} | \psi} $$
+            <p>With $M_{+1} + M_{-1} = \Id$. For example, $M_{+1}$ could be a mixture of projectors $p P_1 + (1-p) P_2$.
+            The notes show an example where $M_{+1} = p P_1 + (1-p) \Theta_1$ and $M_{-1} = p P_1 + (1-p) \Theta_{-1}$ leading to $M_{+1}, M_{-1} \ge 0$ and $M_{+1} + M_{-1} = \Id$. (The notation $P\bra{\psi|\Pi_1|\psi}$ seems to indicate a probability rather than an operator in that snippet.)</p>
+
+            <p><b>2. Completely Noisy Measurement (e.g., in $\mathbb{C}^2$):</b></p>
+            <p>A measurement that gives no information about the initial state. For a qubit:</p>
+            $$ M_{+1} = \Id/2, \quad M_{-1} = \Id/2 $$
+            <p>Then $p(+1) = \Tr((\Id/2) \rho) = 1/2 \Tr(\rho) = 1/2$, and similarly $p(-1) = 1/2$, regardless of $\rho$.
+            This represents a completely random outcome.</p>
+
+            <p><b>3. Noisy Measurement with parameter $(1-p)$ for noise:</b></p>
+            <p>If $M_{+1} = p P_1 + (1-p) \Id/2$ and $M_{-1} = p P_2 + (1-p) \Id/2$, where $P_1+P_2 = \Id$ are projectors.
+            This represents a measurement that attempts to measure in the basis $\{P_1, P_2\}$ with probability $p$, and gives a random outcome with probability $(1-p)$.</p>
+
+            <p><b>4. Coarse-Graining:</b></p>
+            <p>If you have a finer measurement with outcomes $\{ \chi_1, \chi_2, \chi_3, \dots \}$ and corresponding POVM elements $\{E_1, E_2, E_3, \dots \}$, you can define a coarser measurement by grouping outcomes. For example, outcome $A = \text{outcome } \chi_1 \text{ or } \chi_2$, outcome $B = \text{outcome } \chi_3$.
+            The POVM element for $A$ would be $E_A = E_1 + E_2$.
+            The notes show an example of mapping outcomes: $-1 \rightarrow -1$, $0 \rightarrow +1$, $+1 \rightarrow +1$.
+            If original outcomes are described by $M_{-1}, M_0, M_{+1}$, the new coarse-grained outcomes $\tilde{M}_{-1}, \tilde{M}_{+1}$ would be:
+            $$ \tilde{M}_{-1} = M_{-1} $$
+            $$ \tilde{M}_{+1} = M_0 + M_{+1} $$
+            Probabilities must be non-negative ($p(k) \ge 0$) and sum to one ($\sum p(k) = 1$). This implies $E_k \ge 0$ and $\sum E_k = \Id$.
+            </p>
+
+            <h3>Neumark's Extension Theorem</h3>
+            <p>Any POVM on a system Hilbert space $\mathcal{H}_S$ can be realized as a projective measurement on an extended Hilbert space $\mathcal{H}_S \otimes \mathcal{H}_A$, where $\mathcal{H}_A$ is an ancillary system.
+            The process involves preparing the ancilla in a fixed state $\ket{e_0}_A$, applying a joint unitary $U$ on $\mathcal{H}_S \otimes \mathcal{H}_A$, and then performing a projective measurement $\{\Pi_k^A\}$ on the ancilla.
+            The effective POVM element on the system is then $E_k = \Tr_A ( (I_S \otimes \ket{e_0}\bra{e_0}_A) U^\dagger (I_S \otimes \Pi_k^A) U )$.
+            The notes depict this with the system $\ket{\psi}$ interacting with an ancilla (probe) $\ket{0}$ via a unitary $U$, followed by a measurement on the probe yielding outcome $k$ and post-measurement probe state $\ket{\psi_k}$.
+            The probability $p(k) = \braket{\psi | \bra{0} U^\dagger (\Id \otimes \ket{\psi_k}\bra{\psi_k}) U | 0 \rangle | \psi}$.
+            The Kraus operators $M_k$ can be identified as $M_k = \bra{\psi_k} U \ket{0}$.
+            From the notes, a more detailed derivation shows: $p(ij) = \braket{\psi | F_{ij}^\dagger F_{ij} | \psi}$ where $F_{ij} = \bra{i} \tilde{M}^{j,0} \ket{j}$. Here $i,j$ seem to be outcome indices for a joint measurement on system and probe.
+            The key is that $\sum_{i,j} F_{ij}^\dagger F_{ij} = \Id$.
+            </p>
+        </section>
+
+        <section id="incompatible-measurements">
+            <h2>Incompatible Measurements and Joint Measurability</h2>
+            <p>Two observables (described by Hermitian operators) $A$ and $B$ are **compatible** if their operators commute, $[A,B]=0$. This means they can be simultaneously diagonalized and thus measured precisely at the same time.</p>
+            <p>If $[A,B] \neq 0$, they are **incompatible**. There's an inherent uncertainty in simultaneously determining their values (e.g., Heisenberg's uncertainty principle $\Delta X \Delta P \ge \hbar/2$).</p>
+            <p>The concept of joint measurability extends this to general POVMs. Two measurements, described by POVMs $A = \{E_i^A\}$ and $B = \{F_j^B\}$, are **jointly measurable** if there exists a single "parent" POVM $G = \{G_{ij}\}$ such that:</p>
+            $$ \sum_j G_{ij} = E_i^A \quad \forall i $$
+            $$ \sum_i G_{ij} = F_j^B \quad \forall j $$
+            <p>This means that by performing the measurement $G$, one can obtain the statistics for both measurement $A$ (by summing over $j$) and measurement $B$ (by summing over $i$). If such a $G$ (with $G_{ij} \ge 0$) does not exist, then $A$ and $B$ are not jointly measurable (they are incompatible in this stronger sense).</p>
+            <p>For noisy measurements, even if the underlying ideal measurements are incompatible, their noisy versions might become jointly measurable. The notes illustrate this for noisy versions of $\sigma_z$ and $\sigma_x$ for a qubit.
+            Let $S_z = \{\ket{0}\bra{0}, \ket{1}\bra{1}\} = \{N_{+1}^z, N_{-1}^z\}$ and $S_x = \{\ket{+}\bra{+}, \ket{-}\bra{-}\} = \{N_{+1}^x, N_{-1}^x\}$.
+            Noisy versions:
+            $$ M_{\pm 1}^z = \mu N_{\pm 1}^z + (1-\mu)\Id/2 $$
+            $$ M_{\pm 1}^x = \nu N_{\pm 1}^x + (1-\nu)\Id/2 $$
+            These are jointly measurable if a certain condition on $\mu$ and $\nu$ is met (e.g., often related to $\mu^2 + \nu^2 \le 1$ for specific types of noise/measurements, though the notes give $G_{11} = \frac{1}{4}[\Id + \mu(\sigma_z + \sigma_x)]$, etc. leading to a condition like "for $0 \le \mu \le 1/\sqrt{2}$, then exists joint measurement").
+            </p>
+        </section>
+
+        <section id="quantum-dynamics">
+            <h2>General Quantum Dynamics (Evolution)</h2>
+            <p>The evolution of a quantum system, especially an open quantum system interacting with an environment, is described by a Completely Positive Trace-Preserving (CPTP) map, often called a quantum channel $\mathcal{E}$.</p>
+            <p>If $\rho$ is the initial state of the system, the final state $\rho'$ after the evolution is:</p>
+            $$ \rho' = \mathcal{E}(\rho) $$
+            <p>Any CPTP map can be expressed using an **Operator-Sum Representation (Kraus Representation)**:</p>
+            $$ \mathcal{E}(\rho) = \sum_m K_m \rho K_m^\dagger $$
+            <p>where $K_m$ are the Kraus operators associated with the map. For the map to be trace-preserving (i.e., $\Tr(\rho') = \Tr(\rho)$), the Kraus operators must satisfy:</p>
+            $$ \sum_m K_m^\dagger K_m = \Id $$
+            <p>If $\sum_m K_m^\dagger K_m < \Id$, the map is trace-decreasing, which can occur, for example, if some outcomes of a measurement are discarded (sub-selection).</p>
+            <p>The notes provide a derivation of this form for a system interacting with an ancilla (environment/probe).
+            Initial state of system $\rho_S$, ancilla in $\ket{0}\bra{0}$. Joint unitary $U$ acts on $S \otimes A$.
+            Then trace out the ancilla: $\tilde{\rho}_S = \Tr_A [ U (\rho_S \otimes \ket{0}\bra{0}) U^\dagger ]$.
+            Expanding this using a basis $\{\ket{m}\}$ for the ancilla:
+            $$ \tilde{\rho}_S = \sum_m \bra{m} U (\rho_S \otimes \ket{0}\bra{0}) U^\dagger \ket{m} $$
+            Defining $K_m = \bra{m} U \ket{0}$ (which are operators on $\mathcal{H}_S$), we get:
+            $$ \tilde{\rho}_S = \sum_m K_m \rho_S K_m^\dagger $$
+            The condition $\sum_m K_m^\dagger K_m = \Id$ comes from $U$ being unitary.
+            The notes also show a more general form where the ancilla starts in a mixed state or a transformation $\tilde{V}$ is applied, leading to $\tilde{\rho} = \sum_m M^{m,0} \rho (M^{m,0})^\dagger$, where $M^{m,0}$ are the Kraus operators derived from the interaction.
+            </p>
+        </section>
+
+
+        <section class="qa-section">
+            <h2>Questions & Answers</h2>
+            <div class="qa-item">
+                <button class="qa-question">What is a POVM and how does it generalize projective measurements?</button>
+                <div class="qa-answer">
+                    <p>A POVM (Positive Operator-Valued Measure) is a set of positive semi-definite operators $\{E_k\}$ that sum to the identity, $E_k \ge 0, \sum_k E_k = \Id$. Each $E_k$ corresponds to a possible measurement outcome $k$. The probability of outcome $k$ for a state $\rho$ is $p(k) = \Tr(E_k \rho)$. Projective measurements are a special case where each $E_k$ is a projector onto an orthogonal subspace.</p>
+                </div>
+            </div>
+            <div class="qa-item">
+                <button class="qa-question">What does Neumark's Extension Theorem state?</button>
+                <div class="qa-answer">
+                    <p>Neumark's Extension Theorem states that any POVM performed on a system can be realized as a standard projective measurement on a larger system, which consists of the original system plus an ancillary system (probe or environment) prepared in a known state. The interaction between the system and ancilla is described by a unitary operator.</p>
+                </div>
+            </div>
+            <div class="qa-item">
+                <button class="qa-question">What does it mean for two measurements $A=\{E_i^A\}$ and $B=\{F_j^B\}$ to be jointly measurable?</button>
+                <div class="qa-answer">
+                    <p>Two measurements are jointly measurable if there exists a single, more comprehensive POVM $G=\{G_{ij}\}$ such that the statistics of $A$ can be recovered by summing $G_{ij}$ over $j$ (i.e., $\sum_j G_{ij} = E_i^A$), and the statistics of $B$ can be recovered by summing $G_{ij}$ over $i$ (i.e., $\sum_i G_{ij} = F_j^B$). If no such $G$ exists, they are incompatible.</p>
+                </div>
+            </div>
+            <div class="qa-item">
+                <button class="qa-question">How is general quantum dynamics (evolution) described using Kraus operators?</button>
+                <div class="qa-answer">
+                    <p>A general quantum evolution (a CPTP map $\mathcal{E}$) can be described by the operator-sum representation: $\mathcal{E}(\rho) = \sum_m K_m \rho K_m^\dagger$. The operators $K_m$ are called Kraus operators and must satisfy $\sum_m K_m^\dagger K_m = \Id$ for the evolution to be trace-preserving (probability conserving).</p>
+                </div>
+            </div>
+        </section>
+
+        <nav class="part-nav">
+            <a href="index.html" class="nav-prev">« Table of Contents</a>
+            <!-- Example: Link to the next lecture when created -->
+            <!-- <a href="lecture2_density_matrices.html" class="nav-next">Next Lecture: Density Matrices »</a> -->
+        </nav>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2023 Quantum Foundations Notes Project</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js" defer></script>
+</body>
+</html>
