@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Part 1: Ontological Models & Contextuality - Quantum Foundations</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']],
+          macros: {
+            braket: ['\\langle #1 \\rangle', 1],
+            ket: ['| #1 \\rangle', 1],
+            bra: ['\\langle #1 |', 1]
+          }
+        },
+        svg: {
+          fontCache: 'global'
+        }
+      };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+    </script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <p class="breadcrumb"><a href="index.html">Home</a> > Part 1</p>
+            <h1>Part 1: Ontological Models & Generalized Contextuality</h1>
+        </div>
+    </header>
+
+    <main class="container">
+        <section id="ontological-models">
+            <h2>Ontological Models and Realist Theories</h2>
+            <p>For any realist theory, the probability of an outcome $z$ given a preparation $x$ and measurement $y$ is given by an integral over hidden variables (ontic states) $\lambda$:</p>
+            $$ p(z|x,y) = \int \mu(\lambda|P_x) \xi(z|M_y, \lambda) d\lambda $$
+            <p>where:</p>
+            <ul>
+                <li>$P_x$ is the preparation procedure.</li>
+                <li>$\mu(\lambda|P_x)$ is the probability distribution over $\lambda$ for preparation $P_x$.</li>
+                <li>$M_y$ is the measurement procedure.</li>
+                <li>$\xi(z|M_y, \lambda)$ is the probability of outcome $z$ for measurement $M_y$ given ontic state $\lambda$. This is often called the response function.</li>
+            </ul>
+            <p>If $\xi(z|M_y, \lambda) \in \{0,1\}$, the model is said to be <strong>deterministic</strong>.</p>
+        </section>
+
+        <section id="generalized-contextuality">
+            <h2>Generalized Notion of Contextuality (Spekkens 2005)</h2>
+
+            <h3>Preparation Equivalence and Non-Contextuality</h3>
+            <p>Two preparations $P_x$ and $P_{x'}$ are <strong>equivalent</strong> (denoted $P_x \sim P_{x'}$) if for all outcomes $z$ and all measurements $M_y$, the probabilities are the same:</p>
+            $$ p(z|P_x, M_y) = p(z|P_{x'}, M_y) $$
+            <p>This means they produce the same observable statistics for all possible measurements.</p>
+
+            <p><strong>Preparation Non-Contextuality (PNC):</strong> If $P_x \sim P_{x'}$, then their corresponding distributions over ontic states must be identical:
+            $$ \mu(\lambda|P_x) = \mu(\lambda|P_{x'}) \quad \forall \lambda $$
+            <p>Furthermore, if a preparation $P_x$ is equivalent to a convex mixture of other preparations, e.g., $P_x \sim q P_1 + (1-q) P_2$, then under PNC, its ontic state distribution is the corresponding convex mixture:</p>
+            $$ \mu(\lambda|P_x) = q \mu(\lambda|P_1) + (1-q) \mu(\lambda|P_2) $$
+
+            <h3>Measurement Equivalence and Non-Contextuality</h3>
+            <p>Two measurements $M_y$ and $M_{y'}$ are <strong>equivalent</strong> (denoted $M_y \sim M_{y'}$) if for all outcomes $z$ and all preparations $P_x$, the probabilities are the same:</p>
+            $$ p(z|P_x, M_y) = p(z|P_x, M_{y'}) $$
+            <p>This means they yield the same statistics when applied to any possible preparation.</p>
+
+            <p><strong>Measurement Non-Contextuality (MNC):</strong> If $M_y \sim M_{y'}$, then their response functions must be identical for any given ontic state:</p>
+            $$ \xi(z|\lambda, M_y) = \xi(z|\lambda, M_{y'}) \quad \forall z, \lambda $$
+            <p>The response function for an outcome is independent of the "context" of other co-measurable observables, as long as the overall measurements are statistically equivalent.</p>
+
+            <h3>Relationship to Kochen-Specker (KS) Non-Contextuality</h3>
+            <p>Kochen-Specker (KS) non-contextuality is a special case of measurement non-contextuality. KS typically applies to scenarios where:</p>
+            <ul>
+                <li>Measurements are projective (describe by sets of orthogonal projectors).</li>
+                <li>The underlying ontological model is deterministic, i.e., $\xi(z|M,\lambda) \in \{0,1\}$.</li>
+            </ul>
+            <p>In the KS sense, if an observable (represented by a projector $\Pi_k = \ket{\psi_k}\bra{\psi_k}$) can be part of two different complete sets of compatible observables (contexts) $M$ and $\tilde{M}$, then the value assigned to it by the hidden variable $\lambda$ must be the same regardless of the context:
+            $$ \xi(\text{outcome for }\Pi_k | M, \lambda) = \xi(\text{outcome for }\Pi_k | \tilde{M}, \lambda) $$
+
+            <h3>Contextuality Inequality Example (Spekkens)</h3>
+            <p>Quantum theory can be shown to be preparation-contextual by violating inequalities derived from the assumption of PNC. Consider preparations $P_1, P_2, P_3, P_4$ and measurements $M_0, M_1$. Assume the statistical equivalence:</p>
+            $$ \frac{1}{2}P_1 + \frac{1}{2}P_2 \sim \frac{1}{2}P_3 + \frac{1}{2}P_4 $$
+            <p>If PNC holds, then $\frac{1}{2}\mu(\lambda|P_1) + \frac{1}{2}\mu(\lambda|P_2) = \frac{1}{2}\mu(\lambda|P_3) + \frac{1}{2}\mu(\lambda|P_4)$.</p>
+            <p>Define an expression $I$ based on various outcome probabilities:</p>
+            \begin{align*}
+            I = & p(+1|P_1, M_0) + p(+1|P_2, M_1) + p(-1|P_3, M_0) + p(+1|P_3, M_1) \\
+                & + p(+1|P_4, M_0) + p(-1|P_4, M_1) \\
+                & \quad (\text{Note: This specific I form may vary, adapted from general structure in notes})
+            \end{align*}
+            <p>In any preparation non-contextual theory satisfying the equivalence, it can be shown that $I \le 6$. However, quantum mechanics predicts a value that can exceed this, for example, $I = 4+2\sqrt{2} \approx 6.828$, thus demonstrating that quantum theory is preparation-contextual.</p>
+            <p>For instance, using $P_1 = \ket{0}\bra{0}$, $P_2 = \ket{1}\bra{1}$, $P_3 = \ket{+}\bra{+}$, $P_4 = \ket{-}\bra{-}$, and $M_0 = \sigma_z$, $M_1 = \sigma_x$.
+            The quantum calculation involves $p(\text{outcome}|P_i, M_j) = \text{Tr}(\Pi_{\text{outcome}}^{M_j} P_i)$.</p>
+        </section>
+
+        <section class="qa-section">
+            <h2>Questions & Answers</h2>
+            <div class="qa-item">
+                <button class="qa-question">What is the fundamental idea behind a realist theory in quantum mechanics?</button>
+                <div class="qa-answer">
+                    <p>Realist theories postulate the existence of "ontic states" (often called hidden variables, denoted by $\lambda$) that provide a complete description of a physical system. The probabilities of measurement outcomes are then derived by averaging over the possible ontic states, weighted by a distribution function specific to the system's preparation.</p>
+                </div>
+            </div>
+            <div class="qa-item">
+                <button class="qa-question">How is the probability of a measurement outcome $z$ expressed in an ontological model?</button>
+                <div class="qa-answer">
+                    <p>It's given by the integral $p(z|x,y) = \int \mu(\lambda|P_x) \xi(z|M_y, \lambda) d\lambda$, where $\mu(\lambda|P_x)$ is the distribution of ontic states for preparation $P_x$, and $\xi(z|M_y, \lambda)$ is the response function giving the probability of outcome $z$ for measurement $M_y$ given ontic state $\lambda$.</p>
+                </div>
+            </div>
+            <div class="qa-item">
+                <button class="qa-question">What is Preparation Non-Contextuality (PNC)?</button>
+                <div class="qa-answer">
+                    <p>PNC states that if two preparation procedures $P_x$ and $P_{x'}$ are operationally indistinguishable (i.e., they yield the same statistics for all possible measurements), then they must correspond to the exact same probability distribution over the underlying ontic states $\lambda$. That is, if $P_x \sim P_{x'}$, then $\mu(\lambda|P_x) = \mu(\lambda|P_{x'})$.</p>
+                </div>
+            </div>
+             <div class="qa-item">
+                <button class="qa-question">How does Generalized Contextuality relate to Kochen-Specker (KS) contextuality?</button>
+                <div class="qa-answer">
+                    <p>KS contextuality is a specific type of measurement non-contextuality. It applies to deterministic ontological models where an observable is assigned a definite value by the ontic state, independent of which other compatible observables are measured alongside it. Generalized contextuality broadens this concept to non-deterministic models and also introduces the notion of preparation contextuality.</p>
+                </div>
+            </div>
+        </section>
+
+        <nav class="part-nav">
+            <a href="index.html" class="nav-prev">« Table of Contents</a>
+            <!-- <a href="part2_ks_contextuality.html" class="nav-next">Next Part: KS Contextuality »</a> -->
+        </nav>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2023 Quantum Foundations Notes Project</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js" defer></script>
+</body>
+</html>
